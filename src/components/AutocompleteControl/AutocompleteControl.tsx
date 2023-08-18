@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { AutocompleteControlProps } from "./Autocomplete.types";
 import TextField from "../TextField";
 import DropDown from "./components/DropDown";
@@ -26,12 +26,7 @@ function AutocompleteControl<T extends Record<string, any>>({
   ...props
 }: AutocompleteControlProps<T>) {
   const autocompleteRef = useRef<HTMLInputElement | null>(null);
-
-  const [filteredOptions, setFilteredOptions] = useState<T[]>(options ?? []);
-
-  useEffect(() => {
-    setFilteredOptions(() => filteredOptions.slice(0, max));
-  }, [options]);
+  const filteredOptions = options.slice(0, max);
 
   return (
     <div>
