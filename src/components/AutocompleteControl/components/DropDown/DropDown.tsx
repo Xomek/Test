@@ -19,12 +19,12 @@ function DropDown<T extends Record<string, any>>({
       {!loading ? (
         options.map((option, index) =>
           renderOption ? (
-            renderOption(option, () => onClick("option"))
+            renderOption(option, index, () => onClick(option))
           ) : (
             <div
               key={index}
               className={styles.option}
-              onClick={() => onClick("option")}
+              onClick={() => onClick(option)}
             >
               {Object.values(option).map((optionValue) => optionValue + " ")}
             </div>

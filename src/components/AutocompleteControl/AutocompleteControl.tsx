@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { AutocompleteControlProps } from "./Autocomplete.types";
+import { AutocompleteControlProps } from "./AutocompleteControl.types";
 import TextField from "../TextField";
 import DropDown from "./components/DropDown";
 import styles from "./AutocompleteControl.module.css";
