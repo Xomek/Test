@@ -1,3 +1,4 @@
+import TextField from "./TextField";
 import AutocompleteControl from "./AutocompleteControl";
 
-export { AutocompleteControl };
+export { TextField, AutocompleteControl };

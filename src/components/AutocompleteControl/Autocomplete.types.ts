@@ -1,4 +1,7 @@
-export interface AutocompleteControlProps
-  extends React.InputHTMLAttributes<HTMLDivElement> {
+import { TextFieldProps } from "../TextField";
+
+export interface AutocompleteControlProps<T> extends TextFieldProps {
+  options: T[];
+  renderOption?: (option: T) => JSX.Element;
   max: number;
 }
