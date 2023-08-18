@@ -2,6 +2,8 @@ import { TextFieldProps } from "../TextField";
 
 export interface AutocompleteControlProps<T> extends TextFieldProps {
   options: T[];
+  loading?: boolean;
   renderOption?: (option: T) => JSX.Element;
-  max: number;
+  selectValue: (selectedValue: string) => void;
+  max?: number;
 }

@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { observer } from "mobx-react-lite";
 import { AutocompleteControl } from "./components";
+import countries from "./store/Countries";
 import styles from "./App.module.css";
 
 interface Values {
@@ -7,7 +9,7 @@ interface Values {
   autocomplete10: string;
 }
 
-const App: React.FC = () => {
+const App: React.FC = observer(() => {
   const [values, setValues] = useState<Values>({
     autocomplete3: "",
     autocomplete10: "",
@@ -15,6 +17,11 @@ const App: React.FC = () => {
 
   const onChagneHandler = (value: string, name: string) => {
     setValues((prevState) => ({ ...prevState, [name]: value }));
+    countries.getCountries(value); // Тут каждый обращение к api, надо оптимизировать
+  };
+
+  const selectOption = (selectedValue: string, name: string) => {
+    setValues((prevState) => ({ ...prevState, [name]: selectedValue }));
   };
 
   return (
@@ -22,23 +29,22 @@ const App: React.FC = () => {
       <div className={styles.inputs}>
         <AutocompleteControl
           label="autocomplete-3"
-          placeholder="Поиск"
           value={values.autocomplete3}
-          options={[1]}
+          options={countries.options}
+          selectValue={(option) => selectOption(option, "autocomplete3")}
           onChange={(e) => onChagneHandler(e.target.value, "autocomplete3")}
           max={3}
         />
         <AutocompleteControl
           label="autocomplete-10"
-          placeholder="Поиск"
           value={values.autocomplete10}
-          options={[]}
+          options={countries.options}
+          selectValue={(option) => selectOption(option, "autocomplete10")}
           onChange={(e) => onChagneHandler(e.target.value, "autocomplete10")}
-          max={10}
         />
       </div>
     </div>
   );
-};
+});
 
 export default App;
