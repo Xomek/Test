@@ -1,0 +1,47 @@
+@import "../../../../styles/palette.css";
+
+.dropDown {
+  width: 100%;
+  height: auto;
+  max-height: 180px;
+  background-color: white;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  overflow: auto;
+  width: 400px;
+  position: absolute;
+  z-index: 100;
+}
+
+.dropDown::-webkit-scrollbar {
+  width: 4px;
+  border-radius: 8px;
+}
+
+.dropDown::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+}
+
+.option {
+  padding: 5px 10px;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+  color: var(--primary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.option:hover {
+  background-color: var(--primary);
+  color: white;
+  transition: all 0.2s;
+}
+
+.loading {
+  height: 100%;
+  font-size: 16px;
+  padding: 20px;
+}

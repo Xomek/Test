@@ -2,11 +2,3 @@ body {
   font-family: sans-serif;
   background-color: var(--bgBody);
 }
-
-.app {
-  height: 100vh;
-  padding: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}

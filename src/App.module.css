@@ -1,0 +1,13 @@
+.app {
+  height: 100vh;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.app input {
+  width: 400px;
+}
