@@ -2,12 +2,7 @@
   height: 100vh;
   padding: 40px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 30px;
-}
-
-.app input {
-  width: 300px;
 }
