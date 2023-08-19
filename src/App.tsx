@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { observer } from "mobx-react-lite";
-import { AutocompleteControl, CountiresOption } from "./components";
+import { CountiresOption } from "./components";
+import { AutocompleteControl } from "./components/UI";
 import { CountryInfo } from "./api/apiService";
+import { Holder } from "./helpers/Holder";
 import countries from "./store/Countries";
 import styles from "./App.module.css";
-import { Holder } from "./helpers/Holder";
 
 interface AutocompleteFiledInterface {
   autocomplete3: { value: string; max: number };
@@ -47,7 +48,7 @@ const App: React.FC = observer(() => {
       [name]: { ...prevState[name], value: "" },
     }));
   };
-  
+
   return (
     <div className={styles.app}>
       {new Holder(autocompleteFields).getKeys().map((autocomplete) => (
