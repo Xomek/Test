@@ -2,6 +2,7 @@ import { useState } from "react";
 import { observer } from "mobx-react-lite";
 import { CountiresOption } from "./components";
 import { AutocompleteControl, ButtonControl } from "./components/UI";
+import { ControlButtons } from "./components/UI/ButtonControl";
 import { CountryInfo } from "./api/apiService";
 import { Holder } from "./helpers/Holder";
 import countries from "./store/Countries";
@@ -17,11 +18,18 @@ type AutocompleteFieldsType = keyof AutocompleteFiledsInterface;
 interface ButtonFieldsInterface {
   right2: {
     value: string;
+    rightButtons?: ControlButtons[];
+    leftButtons?: ControlButtons[];
   };
+
   ["left1-right2"]: {
     value: string;
+    rightButtons?: ControlButtons[];
+    leftButtons?: ControlButtons[];
   };
 }
+
+type ButtonFieldsType = keyof ButtonFieldsInterface;
 
 const App: React.FC = observer(() => {
   const [autocompleteFields, setAutocompleteFields] =
@@ -31,16 +39,85 @@ const App: React.FC = observer(() => {
     });
 
   const [buttonFields, setButtonFields] = useState<ButtonFieldsInterface>({
-    right2: { value: "" },
-    ["left1-right2"]: { value: "" },
+    right2: {
+      value: "",
+
+      rightButtons: [
+        {
+          text: "Очистить",
+          onClick: () => {
+            setButtonFields((prevState) => ({
+              ...prevState,
+              right2: { ...prevState.right2, value: "" },
+            }));
+          },
+        },
+        {
+          text: "Записать",
+          onClick: () => {
+            setButtonFields((prevState) => ({
+              ...prevState,
+              right2: { ...prevState.right2, value: "Hello World" },
+            }));
+          },
+        },
+      ],
+    },
+
+    ["left1-right2"]: {
+      value: "",
+      leftButtons: [
+        {
+          text: "Первая",
+          onClick: () => {
+            setButtonFields((prevState) => ({
+              ...prevState,
+              ["left1-right2"]: {
+                ...prevState["left1-right2"],
+                value: Number.isFinite(prevState["left1-right2"].value)
+                  ? "Число"
+                  : "не число",
+              },
+            }));
+          },
+        },
+      ],
+      rightButtons: [
+        {
+          text: "alert",
+          onClick: () => {
+            alert(buttonFields["left1-right2"].value);
+          },
+        },
+      ],
+    },
   });
 
+  //////////////////////////////////////////////////////////////////////////////////////////////
   const onChagneHandler = (value: string, name: AutocompleteFieldsType) => {
     setAutocompleteFields((prevState) => ({
       ...prevState,
       [name]: { ...prevState[name], value },
     }));
     countries.getCountries(value); // Тут каждый обращение к api, надо оптимизировать
+  };
+
+  const clearValue = (name: AutocompleteFieldsType) => {
+    setAutocompleteFields((prevState) => ({
+      ...prevState,
+      [name]: { ...prevState[name], value: "" },
+    }));
+  };
+  //////////////////////////////////////////////////////////////////////////////////////////////
+
+  const onChagneHandlerButtonControl = (
+    value: string,
+    name: ButtonFieldsType
+  ) => {
+    setButtonFields((prevState) => ({
+      ...prevState,
+      [name]: { ...prevState[name], value },
+    }));
   };
 
   const selectOption = (
@@ -56,13 +133,6 @@ const App: React.FC = observer(() => {
     }));
   };
 
-  const clearValue = (name: AutocompleteFieldsType) => {
-    setAutocompleteFields((prevState) => ({
-      ...prevState,
-      [name]: { ...prevState[name], value: "" },
-    }));
-  };
-
   return (
     <div className={styles.app}>
       {new Holder(autocompleteFields).getKeys().map((autocomplete) => (
@@ -70,15 +140,13 @@ const App: React.FC = observer(() => {
           key={autocomplete}
           label={autocomplete}
           options={countries.options}
-          name={autocomplete}
-          value={autocompleteFields[autocomplete].value}
           onChange={(e) => onChagneHandler(e.target.value, autocomplete)}
           selectValue={(option) => selectOption(option, autocomplete)}
-          clearValue={() => clearValue(autocomplete)}
-          max={autocompleteFields[autocomplete].max}
           renderOption={(option, index, cb) => (
             <CountiresOption key={index} option={option} onClick={cb} />
           )}
+          clearValue={() => clearValue(autocomplete)}
+          {...autocompleteFields[autocomplete]}
         />
       ))}
 
@@ -86,9 +154,11 @@ const App: React.FC = observer(() => {
         <ButtonControl
           key={buttonControl}
           label={buttonControl}
-          value={buttonFields[buttonControl].value}
-          rightButtons={[{ text: "Тест" }]}
+          onChange={(e) =>
+            onChagneHandlerButtonControl(e.target.value, buttonControl)
+          }
           clearValue={() => {}}
+          {...buttonFields[buttonControl]}
         />
       ))}
     </div>

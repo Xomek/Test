@@ -1,6 +1,7 @@
 import { ButtonControlProps, ControlButtons } from "./ButtonControl.types";
 import TextField from "../TextField";
 import Button from "../Button/Button";
+import styles from "./ButtonControl.module.css";
 
 const ButtonControl: React.FC<ButtonControlProps> = ({
   leftButtons,
@@ -16,7 +17,7 @@ const ButtonControl: React.FC<ButtonControlProps> = ({
   };
 
   return (
-    <div>
+    <div className={styles.control}>
       {getButtons(leftButtons ?? [])}
       <TextField {...props} />
       {getButtons(rightButtons ?? [])}

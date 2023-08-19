@@ -1,0 +1,9 @@
+.control {
+  display: flex;
+  gap: 5px;
+  width: 400px;
+}
+
+.control button {
+  align-self: flex-end;
+}
