@@ -74,7 +74,7 @@ const App: React.FC = observer(() => {
               ...prevState,
               ["left1-right2"]: {
                 ...prevState["left1-right2"],
-                value: Number.isFinite(prevState["left1-right2"].value)
+                value: Number.isFinite(buttonFields["left1-right2"].value)
                   ? "Число"
                   : "не число",
               },
@@ -86,6 +86,7 @@ const App: React.FC = observer(() => {
         {
           text: "alert",
           onClick: () => {
+            console.log(buttonFields["left1-right2"].value);
             alert(buttonFields["left1-right2"].value);
           },
         },
@@ -140,6 +141,7 @@ const App: React.FC = observer(() => {
           key={autocomplete}
           label={autocomplete}
           options={countries.options}
+          loading={countries.isLoading}
           onChange={(e) => onChagneHandler(e.target.value, autocomplete)}
           selectValue={(option) => selectOption(option, autocomplete)}
           renderOption={(option, index, cb) => (
@@ -157,7 +159,6 @@ const App: React.FC = observer(() => {
           onChange={(e) =>
             onChagneHandlerButtonControl(e.target.value, buttonControl)
           }
-          clearValue={() => {}}
           {...buttonFields[buttonControl]}
         />
       ))}

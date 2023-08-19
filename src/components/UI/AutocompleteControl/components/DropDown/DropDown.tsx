@@ -16,7 +16,9 @@ function DropDown<T extends Record<string, any> | string>({
 }: DropDownProps<T>) {
   return (
     <div className={styles.dropDown}>
-      {!loading ? (
+      {loading ? (
+        <div className={styles.loading}>Загрузка...</div>
+      ) : (
         options.map((option, index) =>
           renderOption ? (
             renderOption(option, index, () => onClick(option))
@@ -32,8 +34,6 @@ function DropDown<T extends Record<string, any> | string>({
             </div>
           )
         )
-      ) : (
-        <div className={styles.loading}>Загрузка...</div>
       )}
     </div>
   );
