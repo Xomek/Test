@@ -1,0 +1,41 @@
+@import "../../../styles/palette.css";
+
+.button {
+  padding: 5px 10px;
+  border-radius: 8px;
+  letter-spacing: 1px;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.contained {
+  border: 2px solid transparent;
+  background-color: var(--primary);
+  color: #fff;
+  transition: all 0.2s;
+}
+
+.contained:hover {
+  background-color: var(--disabled);
+  transition: all 0.2s;
+}
+
+.outlined {
+  border: 2px solid var(--primary);
+  background-color: transparent;
+  color: var(--primary);
+}
+
+.outlined:hover {
+  border: 2px solid var(--disabled);
+  color: var(--disabled);
+  transition: all 0.2s;
+}
+
+.button:disabled {
+  background-color: gray;
+  cursor: default;
+}
