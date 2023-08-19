@@ -36,6 +36,7 @@ const ButtonControls: React.FC = () => {
 
     ["left1-right2"]: {
       value: "",
+
       leftButtons: [
         {
           text: "Первая",
@@ -52,11 +53,11 @@ const ButtonControls: React.FC = () => {
           },
         },
       ],
+
       rightButtons: [
         {
           text: "alert",
           onClick: () => {
-            console.log(buttonFields["left1-right2"].value);
             alert(buttonFields["left1-right2"].value);
           },
         },
