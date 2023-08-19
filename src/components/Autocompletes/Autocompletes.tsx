@@ -3,22 +3,22 @@ import { useState } from "react";
 import { Holder } from "../../helpers/Holder";
 import CountiresOption from "../CountriesOption";
 import { AutocompleteControl, Paper } from "../UI";
-import {
-  AutocompleteFieldsType,
-  AutocompleteFiledsInterface,
-} from "./Autocompletes.types";
+import { AutocompleteFieldInterface } from "./Autocompletes.types";
 import countries from "../../store/Countries";
 import { CountryInfo } from "../../api/apiService";
 import styles from "./Autocompletes.module.css";
+import { KeyofType } from "../../types";
 
 const Autocompletes: React.FC = observer(() => {
   const [autocompleteFields, setAutocompleteFields] =
-    useState<AutocompleteFiledsInterface>({
+    useState<AutocompleteFieldInterface>({
       autocomplete3: { value: "", max: 3 },
       autocomplete10: { value: "", max: 10 },
     });
 
-  const onChagneHandler = (value: string, name: AutocompleteFieldsType) => {
+  type TypeofFields = typeof autocompleteFields;
+
+  const onChagneHandler = (value: string, name: KeyofType<TypeofFields>) => {
     setAutocompleteFields((prevState) => ({
       ...prevState,
       [name]: { ...prevState[name], value },
@@ -26,17 +26,14 @@ const Autocompletes: React.FC = observer(() => {
     countries.getCountries(value); // Тут каждый обращение к api, надо оптимизировать
   };
 
-  const clearValue = (name: AutocompleteFieldsType) => {
+  const clearValue = (name: KeyofType<TypeofFields>) => {
     setAutocompleteFields((prevState) => ({
       ...prevState,
       [name]: { ...prevState[name], value: "" },
     }));
   };
 
-  const selectOption = (
-    selectedOption: CountryInfo,
-    name: AutocompleteFieldsType
-  ) => {
+  const selectOption = (selectedOption: CountryInfo, name: KeyofType<TypeofFields>) => {
     setAutocompleteFields((prevState) => ({
       ...prevState,
       [name]: {
