@@ -8,7 +8,11 @@ const ButtonControl: React.FC<ButtonControlProps> = ({
   ...props
 }) => {
   const getButtons = (buttons: ControlButtons[]) => {
-    return buttons.map((props) => <Button {...props}>{props.text}</Button>);
+    return buttons.map((props, index) => (
+      <Button key={index} {...props}>
+        {props.text}
+      </Button>
+    ));
   };
 
   return (
