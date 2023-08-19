@@ -8,7 +8,7 @@ import styles from "./DropDown.module.css";
  * @param onClick Обработчик клика.
  */
 
-function DropDown<T extends Record<string, any>>({
+function DropDown<T extends Record<string, any> | string>({
   options,
   loading,
   renderOption,
@@ -26,7 +26,9 @@ function DropDown<T extends Record<string, any>>({
               className={styles.option}
               onClick={() => onClick(option)}
             >
-              {Object.values(option).map((optionValue) => optionValue + " ")}
+              {typeof option === "string"
+                ? option
+                : Object.values(option).map((optionValue) => optionValue + " ")}
             </div>
           )
         )

@@ -3,7 +3,7 @@ export interface DropDownProps<T> {
   loading?: boolean;
   renderOption?: (
     option: T,
-    undex: number,
+    index: number,
     cb: (selectedOption: T) => void
   ) => JSX.Element;
   onClick: (selectedOption: T) => void;

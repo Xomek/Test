@@ -4,54 +4,68 @@ import { AutocompleteControl, CountiresOption } from "./components";
 import { CountryInfo } from "./api/apiService";
 import countries from "./store/Countries";
 import styles from "./App.module.css";
+import { Holder } from "./helpers/Holder";
 
-interface Values {
-  autocomplete3: string;
-  autocomplete10: string;
+interface AutocompleteFiledInterface {
+  autocomplete3: { value: string; max: number };
+  autocomplete10: { value: string; max: number };
 }
 
-const App: React.FC = observer(() => {
-  const [values, setValues] = useState<Values>({
-    autocomplete3: "",
-    autocomplete10: "",
-  });
+type AutocompleteFieldsType = keyof AutocompleteFiledInterface;
 
-  const onChagneHandler = (value: string, name: string) => {
-    setValues((prevState) => ({ ...prevState, [name]: value }));
+const App: React.FC = observer(() => {
+  const [autocompleteFields, setAutocompleteFields] =
+    useState<AutocompleteFiledInterface>({
+      autocomplete3: { value: "", max: 3 },
+      autocomplete10: { value: "", max: 10 },
+    });
+
+  const onChagneHandler = (value: string, name: AutocompleteFieldsType) => {
+    setAutocompleteFields((prevState) => ({
+      ...prevState,
+      [name]: { ...prevState[name], value },
+    }));
     countries.getCountries(value); // Тут каждый обращение к api, надо оптимизировать
   };
 
-  const selectOption = (selectedOption: CountryInfo, name: string) => {
-    setValues((prevState) => ({ ...prevState, [name]: selectedOption }));
+  const selectOption = (
+    selectedOption: CountryInfo,
+    name: AutocompleteFieldsType
+  ) => {
+    setAutocompleteFields((prevState) => ({
+      ...prevState,
+      [name]: {
+        ...prevState[name],
+        value: `${selectedOption.name} (${selectedOption.fullName})`,
+      },
+    }));
   };
 
-  // key index это плохо, но у даты нет id
-
+  const clearValue = (name: AutocompleteFieldsType) => {
+    setAutocompleteFields((prevState) => ({
+      ...prevState,
+      [name]: { ...prevState[name], value: "" },
+    }));
+  };
+  
   return (
     <div className={styles.app}>
-      <div className={styles.inputs}>
+      {new Holder(autocompleteFields).getKeys().map((autocomplete) => (
         <AutocompleteControl
-          label="autocomplete-3"
-          value={values.autocomplete3}
+          key={autocomplete}
+          label={autocomplete}
           options={countries.options}
-          selectValue={(option) => selectOption(option, "autocomplete3")}
-          onChange={(e) => onChagneHandler(e.target.value, "autocomplete3")}
-          renderOption={(option, index, cb) => (
-            <CountiresOption key={index} option={option} onClick={cb} />
-          )}
-          max={3}
-        />
-        <AutocompleteControl
-          label="autocomplete-10"
-          value={values.autocomplete10}
-          options={countries.options}
-          selectValue={(option) => selectOption(option, "autocomplete10")}
-          onChange={(e) => onChagneHandler(e.target.value, "autocomplete10")}
+          name={autocomplete}
+          value={autocompleteFields[autocomplete].value}
+          onChange={(e) => onChagneHandler(e.target.value, autocomplete)}
+          selectValue={(option) => selectOption(option, autocomplete)}
+          clearValue={() => clearValue(autocomplete)}
+          max={autocompleteFields[autocomplete].max}
           renderOption={(option, index, cb) => (
             <CountiresOption key={index} option={option} onClick={cb} />
           )}
         />
-      </div>
+      ))}
     </div>
   );
 });

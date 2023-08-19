@@ -2,16 +2,12 @@
   height: 100vh;
   padding: 40px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.inputs {
-  display: flex;
-  flex-direction: column;
   gap: 20px;
 }
 
-.inputs input {
+.app input {
   width: 400px;
 }
