@@ -16,7 +16,7 @@ const ButtonControls: React.FC = () => {
     },
   });
 
-  const fieldsButtonParams: any = {
+  const fieldsButtonParams = {
     right2: {
       rightButtons: [
         {
