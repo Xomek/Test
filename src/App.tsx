@@ -1,4 +1,4 @@
-import { Autocompletes, ButtonControls } from "./components";
+import { ButtonControls, Autocompletes } from "./containers";
 import styles from "./App.module.css";
 
 const App: React.FC = () => {

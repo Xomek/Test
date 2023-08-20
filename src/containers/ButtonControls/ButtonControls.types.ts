@@ -1,5 +1,3 @@
-import { ControlButtons } from "../UI/ButtonControl";
-
 export interface FieldType {
   value: string;
 }

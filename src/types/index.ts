@@ -1,1 +1,1 @@
-export type KeyofType<T extends object> = keyof T;
+export type KeyofType<T extends Record<string, any>> = keyof T;
