@@ -47,8 +47,8 @@ const ButtonControls: React.FC = () => {
         {
           text: "Проверить",
           onClick() {
-            const value = +buttonFields["left1-right1"].value;
-            !isNaN(+value) && alert(value);
+            const value = buttonFields["left1-right1"].value;
+            !isNaN(+value) && value !== "" && alert(value);
           },
         },
       ],
