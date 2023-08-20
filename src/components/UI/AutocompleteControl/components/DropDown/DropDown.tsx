@@ -17,7 +17,9 @@ function DropDown<T extends Record<string, any> | string>({
   return (
     <div className={styles.dropDown}>
       {loading ? (
-        <div className={styles.loading}>Загрузка...</div>
+        <div className={styles.boxLoader}>
+          <div className={styles.loading} />
+        </div>
       ) : (
         options.map((option, index) =>
           renderOption ? (

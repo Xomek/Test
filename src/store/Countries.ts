@@ -3,7 +3,7 @@ import { CountryInfo, getCountryByName } from "../api/apiService";
 
 class Countries {
   options: CountryInfo[] = [];
-  isLoading: boolean = false;
+  isLoading = false;
 
   constructor() {
     makeAutoObservable(this);

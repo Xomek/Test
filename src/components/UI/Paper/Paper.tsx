@@ -3,6 +3,13 @@ import { PaperProps } from "./Paper.types";
 import cn from "classnames";
 import styles from "./Paper.module.css";
 
+// Не доделал :(
+
+/**
+ * @param width Позволяет контролировать ширину компонента.
+ * @param height Позволяет контролировать высоту компонента.
+ */
+
 const Paper: React.FC<PropsWithChildren<PaperProps>> = ({
   className,
   children,
