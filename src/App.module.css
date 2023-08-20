@@ -2,12 +2,8 @@
   height: 100vh;
   padding: 40px;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 20px;
-}
-
-.app input {
-  width: 400px;
+  gap: 30px;
 }

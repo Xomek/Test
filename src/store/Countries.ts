@@ -3,15 +3,20 @@ import { CountryInfo, getCountryByName } from "../api/apiService";
 
 class Countries {
   options: CountryInfo[] = [];
-  loading: boolean = false;
-  error: string = "";
+  isLoading: boolean = false;
 
   constructor() {
     makeAutoObservable(this);
   }
 
   async getCountries(countryName: string) {
-    this.options = await getCountryByName(countryName);
+    try {
+      this.isLoading = true;
+      this.options = await getCountryByName(countryName);
+      this.isLoading = false;
+    } catch (error) {
+      this.isLoading = false;
+    }
   }
 }
 

@@ -1,0 +1,14 @@
+@import "../../styles/palette.css";
+
+.paper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.title {
+  font-size: 30px;
+  color: var(--primary);
+}
