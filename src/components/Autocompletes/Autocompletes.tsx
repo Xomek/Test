@@ -33,7 +33,10 @@ const Autocompletes: React.FC = observer(() => {
     }));
   };
 
-  const selectOption = (selectedOption: CountryInfo, name: KeyofType<TypeofFields>) => {
+  const selectOption = (
+    selectedOption: CountryInfo,
+    name: KeyofType<TypeofFields>
+  ) => {
     setAutocompleteFields((prevState) => ({
       ...prevState,
       [name]: {

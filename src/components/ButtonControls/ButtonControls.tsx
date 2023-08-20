@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { Holder } from "../../helpers/Holder";
 import { ButtonControl, Paper } from "../UI";
-import {
-  ButtonFieldsInterface,
-  ButtonFieldsType,
-} from "./ButtonControls.types";
+import { ButtonFieldsInterface } from "./ButtonControls.types";
+import { KeyofType } from "../../types";
 import styles from "./ButtonControls.module.css";
 
 const ButtonControls: React.FC = () => {
@@ -65,7 +63,9 @@ const ButtonControls: React.FC = () => {
     },
   });
 
-  const onChagneHandler = (value: string, name: ButtonFieldsType) => {
+  type TypeofFields = typeof buttonFields;
+
+  const onChagneHandler = (value: string, name: KeyofType<TypeofFields>) => {
     setButtonFields((prevState) => ({
       ...prevState,
       [name]: { ...prevState[name], value },
