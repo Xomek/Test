@@ -9,45 +9,46 @@ const ButtonControls: React.FC = () => {
   const [buttonFields, setButtonFields] = useState<ButtonFieldsInterface>({
     right2: {
       value: "",
+    },
 
+    ["left1-right1"]: {
+      value: "",
+    },
+  });
+
+  const fieldsButtonParams: any = {
+    right2: {
       rightButtons: [
         {
           text: "Очистить",
-          onClick: () => {
+          onClick() {
             setButtonFields((prevState) => ({
               ...prevState,
-              right2: { ...prevState.right2, value: "" },
+              right2: { value: "" },
             }));
           },
         },
         {
-          text: "Записать",
-          onClick: () => {
+          text: "Заполнить",
+          onClick() {
             setButtonFields((prevState) => ({
               ...prevState,
-              right2: { ...prevState.right2, value: "Hello World" },
+              right2: {
+                value: "Hello World",
+              },
             }));
           },
         },
       ],
     },
 
-    ["left1-right2"]: {
-      value: "",
-
+    ["left1-right1"]: {
       leftButtons: [
         {
-          text: "Первая",
-          onClick: () => {
-            setButtonFields((prevState) => ({
-              ...prevState,
-              ["left1-right2"]: {
-                ...prevState["left1-right2"],
-                value: Number.isFinite(buttonFields["left1-right2"].value)
-                  ? "Число"
-                  : "не число",
-              },
-            }));
+          text: "Проверить",
+          onClick() {
+            const value = +buttonFields["left1-right1"].value;
+            !isNaN(+value) && alert(value);
           },
         },
       ],
@@ -55,22 +56,24 @@ const ButtonControls: React.FC = () => {
       rightButtons: [
         {
           text: "alert",
-          onClick: () => {
-            alert(buttonFields["left1-right2"].value);
+          onClick() {
+            alert(buttonFields["left1-right1"].value);
           },
         },
       ],
     },
-  });
+  };
 
-  type TypeofFields = typeof buttonFields;
-
-  const onChagneHandler = (value: string, name: KeyofType<TypeofFields>) => {
+  const onChagneHandler = (
+    value: string,
+    name: KeyofType<typeof buttonFields>
+  ) => {
     setButtonFields((prevState) => ({
       ...prevState,
       [name]: { ...prevState[name], value },
     }));
   };
+
   return (
     <Paper className={styles.paper}>
       <div className={styles.title}>Контрол с кнопками</div>
@@ -79,8 +82,9 @@ const ButtonControls: React.FC = () => {
         <ButtonControl
           key={buttonControl}
           label={buttonControl}
+          value={buttonFields[buttonControl].value}
           onChange={(e) => onChagneHandler(e.target.value, buttonControl)}
-          {...buttonFields[buttonControl]}
+          {...fieldsButtonParams[buttonControl]}
         />
       ))}
     </Paper>

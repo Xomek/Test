@@ -1,9 +1,8 @@
 import { ControlButtons } from "../UI/ButtonControl";
 
-export type FieldType = {
+export interface FieldType {
   value: string;
-  leftButtons?: ControlButtons[];
-  rightButtons?: ControlButtons[];
-};
+}
 
-export type ButtonFieldsInterface = Record<string, FieldType>;
+export type ButtonControlNames = "right2" | "left1-right1";
+export type ButtonFieldsInterface = Record<ButtonControlNames, FieldType>;

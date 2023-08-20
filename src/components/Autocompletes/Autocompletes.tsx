@@ -6,8 +6,8 @@ import { AutocompleteControl, Paper } from "../UI";
 import { AutocompleteFieldInterface } from "./Autocompletes.types";
 import countries from "../../store/Countries";
 import { CountryInfo } from "../../api/apiService";
-import styles from "./Autocompletes.module.css";
 import { KeyofType } from "../../types";
+import styles from "./Autocompletes.module.css";
 
 const Autocompletes: React.FC = observer(() => {
   const [autocompleteFields, setAutocompleteFields] =

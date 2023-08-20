@@ -3,6 +3,11 @@ import TextField from "../TextField";
 import Button from "../Button/Button";
 import styles from "./ButtonControl.module.css";
 
+/**
+ @param leftButtons Принимает массив объектов типа { text: string; onClick: ()=> void } для отображени кнопок слева.
+ @param rightButtons Принимает массив объектов типа { text: string; onClick: ()=> void } для отображени кнопок справа.
+ */
+
 const ButtonControl: React.FC<ButtonControlProps> = ({
   leftButtons,
   rightButtons,
