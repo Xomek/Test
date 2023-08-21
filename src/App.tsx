@@ -1,8 +1,13 @@
-import React from "react";
-import "./App.css";
+import { ButtonControls, Autocompletes } from "./containers";
+import styles from "./App.module.css";
 
-function App() {
-  return <div></div>;
-}
+const App: React.FC = () => {
+  return (
+    <div className={styles.app}>
+      <ButtonControls />
+      <Autocompletes />
+    </div>
+  );
+};
 
 export default App;
