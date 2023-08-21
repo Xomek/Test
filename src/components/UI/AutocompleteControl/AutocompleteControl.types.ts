@@ -9,5 +9,5 @@ export interface AutocompleteControlProps<T> extends TextFieldProps {
     cb: (selectedOption: T) => void
   ) => JSX.Element;
   selectValue: (selectedOption: T) => void;
-  max?: number;
+  max: number;
 }

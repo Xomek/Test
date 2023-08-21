@@ -20,7 +20,7 @@ function AutocompleteControl<T extends Record<string, any>>({
   renderOption,
   placeholder = "Поиск",
   selectValue,
-  max = 10,
+  max,
   className,
   ...props
 }: AutocompleteControlProps<T>) {
@@ -28,7 +28,7 @@ function AutocompleteControl<T extends Record<string, any>>({
   const filteredOptions = options.slice(0, max);
 
   return (
-    <div  >
+    <div>
       <TextField
         className={className}
         ref={autocompleteRef}

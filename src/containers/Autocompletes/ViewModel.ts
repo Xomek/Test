@@ -10,17 +10,17 @@ import {
 
 class ViewModel {
   fields: AutocompleteFieldsType = {
-    autocomplete3: { value: "" },
-    autocomplete10: { value: "" },
+    autocomplete3: { value: "", max: 3 },
+    autocomplete10: { value: "", max: 10 },
   };
   countries: CountryInfo[] = [];
-  isLoading: boolean = false;
+  isLoading = false;
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  async getCountries(countryName: string) {
+  getCountries = async (countryName: string) => {
     try {
       runInAction(() => {
         this.isLoading = true;
@@ -37,15 +37,15 @@ class ViewModel {
         this.isLoading = false;
       });
     }
-  }
+  };
 
-  onChagneHandler(value: string, name: AutocompleteNames) {
+  onChagneHandler = (value: string, name: AutocompleteNames) => {
     this.fields[name].value = value;
-  }
+  };
 
-  onClearHandler(name: AutocompleteNames) {
+  onClearHandler = (name: AutocompleteNames) => {
     this.fields[name].value = "";
-  }
+  };
 
   selectOption = (selectedOption: CountryInfo, name: AutocompleteNames) => {
     this.fields[
