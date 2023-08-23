@@ -1,26 +1,20 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { action, makeObservable, observable, runInAction } from "mobx";
 import { CountryInfo, getCountryByName } from "../../api/apiService";
-import { getObjectKeys } from "../../helpers";
-import {
-  AutocompleteFieldsType,
-  AutocompleteNames,
-} from "./Autocompletes.types";
+import Control from "../../ViewModels/Control";
 
-// Сначала я реализовал MVVM через useAutocompletes, а потом понял для чего всё таки в задании был нужен mobx
+class ViewModel<
+  T extends { value: string; name: string },
+  K extends string
+> extends Control<T, K> {
+  @observable countries: CountryInfo[] = [];
+  @observable isLoading = false;
 
-class ViewModel {
-  fields: AutocompleteFieldsType = {
-    autocomplete3: { value: "", max: 3 },
-    autocomplete10: { value: "", max: 10 },
-  };
-  countries: CountryInfo[] = [];
-  isLoading = false;
-
-  constructor() {
-    makeAutoObservable(this);
+  constructor(name: K) {
+    super(name);
+    makeObservable(this);
   }
 
-  getCountries = async (countryName: string) => {
+  @action getCountries = async (countryName: string) => {
     try {
       runInAction(() => {
         this.isLoading = true;
@@ -39,23 +33,9 @@ class ViewModel {
     }
   };
 
-  onChagneHandler = (value: string, name: AutocompleteNames) => {
-    this.fields[name].value = value;
+  @action selectOption = (selectedOption: CountryInfo) => {
+    this.field.value = `${selectedOption.name} ${selectedOption.fullName}`;
   };
-
-  onClearHandler = (name: AutocompleteNames) => {
-    this.fields[name].value = "";
-  };
-
-  selectOption = (selectedOption: CountryInfo, name: AutocompleteNames) => {
-    this.fields[
-      name
-    ].value = `${selectedOption.name} ${selectedOption.fullName}`;
-  };
-
-  get labels() {
-    return getObjectKeys(this.fields);
-  }
 }
 
-export default new ViewModel();
+export default ViewModel;

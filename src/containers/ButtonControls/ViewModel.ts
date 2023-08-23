@@ -1,72 +1,46 @@
-import { makeAutoObservable } from "mobx";
-import { getObjectKeys } from "../../helpers";
-import { KeyofType } from "../../types";
-import { ButtonFieldsInterface } from "./ButtonControls.types";
+import { action, makeObservable, observable } from "mobx";
+import Control from "../../ViewModels/Control";
+import { ControlButtons } from "../../components/UI/ButtonControl";
 
-// Сначала я реализовал MVVM через useButtonControls, а потом понял для чего всё таки в задании был нужен mobx
+class ViewModel<
+  T extends { value: string; name: string },
+  K extends string
+> extends Control<T, K> {
+  @observable leftButtons: ControlButtons[] = [];
+  @observable rightButtons: ControlButtons[] = [];
 
-class ViewModel {
-  fields: ButtonFieldsInterface = {
-    right2: {
-      value: "",
-    },
-
-    ["left1-right1"]: {
-      value: "",
-    },
-  };
-
-  buttons = {
-    right2: {
-      rightButtons: [
-        {
-          text: "Очистить",
-          onClick: () => {
-            this.fields.right2.value = "";
-          },
-        },
-        {
-          text: "Заполнить",
-          onClick: () => {
-            this.fields.right2.value = "Hello World";
-          },
-        },
-      ],
-    },
-
-    ["left1-right1"]: {
-      leftButtons: [
-        {
-          text: "Проверить",
-          onClick: () => {
-            const value = this.fields["left1-right1"].value;
-            !isNaN(+value) && value !== "" && alert(value);
-          },
-        },
-      ],
-
-      rightButtons: [
-        {
-          text: "alert",
-          onClick: () => {
-            alert(this.fields["left1-right1"].value);
-          },
-        },
-      ],
-    },
-  };
-
-  constructor() {
-    makeAutoObservable(this);
+  constructor(name: K) {
+    super(name);
+    makeObservable(this);
   }
 
-  onChagneHandler = (value: string, name: KeyofType<typeof this.fields>) => {
-    this.fields[name].value = value;
-  };
+  @action helloWorldInValue() {
+    this.field.value = "Hello World";
+  }
 
-  get labels() {
-    return getObjectKeys(this.fields);
+  @action alertValue() {
+    alert(this.field.value);
+  }
+
+  @action clearValue() {
+    this.field.value = "";
+  }
+
+  @action checkInNumberValue() {
+    !isNaN(+this.field.value) && alert(this.field.value);
+  }
+
+  @action createButton(type: "left" | "right", text: string, cb: () => void) {
+    switch (type) {
+      case "left":
+        this.leftButtons.push({ text, onClick: cb });
+        break;
+
+      case "right":
+        this.rightButtons.push({ text, onClick: cb });
+        break;
+    }
   }
 }
 
-export default new ViewModel();
+export default ViewModel;
