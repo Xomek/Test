@@ -31,20 +31,19 @@ class ViewModel<T extends FieldType> extends Control<T> {
     this.isLoading = false;
   }
 
-  getCountries = async (countryName: string) => {
+  getCountries = async (reqParam: { active: boolean }) => {
     try {
       runInAction(() => {
         this.isLoading = true;
       });
 
-      const patch = await getCountryByName(countryName);
-
-      runInAction(() => {
-        if (this.isLoading) {
+      const patch = await getCountryByName(this.field.value);
+      if (reqParam.active) {
+        runInAction(() => {
           this.countries = patch;
           this.isLoading = false;
-        }
-      });
+        });
+      }
     } catch (error) {
       runInAction(() => {
         this.isLoading = false;

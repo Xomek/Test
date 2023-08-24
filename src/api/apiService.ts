@@ -8,7 +8,7 @@ export interface CountryInfo {
 
 export function getCountryByName(countryName: string): Promise<CountryInfo[]> {
   return new Promise((resolve) => {
-    setTimeout(resolve, getRandom(100, 800));
+    setTimeout(resolve, getRandom(5000, 9000));
   }).then(() => {
     if (typeof countryName !== "string" || !countryName) {
       return [];

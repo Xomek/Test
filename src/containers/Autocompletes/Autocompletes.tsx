@@ -22,21 +22,30 @@ const list = new ControlList([
   }),
 ]);
 
-const Autocompletes: React.FC = observer(() => {
-  const [
-    { field: field3, getCountries: getCountries3 },
-    { field: field10, getCountries: getCountries10 },
-  ] = list.controls;
+const autocontrol3 = list.getControlByName("autocomplete3");
+const autocontrol10 = list.getControlByName("autocomplete10");
 
-  const debounced3 = useDebounce(field3.value, 400);
-  const debounced10 = useDebounce(field10.value, 400);
+const Autocompletes: React.FC = observer(() => {
+  const debounced3 = useDebounce(autocontrol3?.field?.value, 400);
+  const debounced10 = useDebounce(autocontrol10?.field?.value, 400);
 
   useEffect(() => {
-    getCountries3(field3.value);
+    // Если бы имел дело с реальным запросом использовал бы AbortController для отмены всех предыдущих запросов
+    const reqParam = { active: true };
+    autocontrol3?.getCountries(reqParam);
+
+    return () => {
+      reqParam.active = false;
+    };
   }, [debounced3]);
 
   useEffect(() => {
-    getCountries10(field10.value);
+    const reqParam = { active: true };
+    autocontrol10?.getCountries(reqParam);
+
+    return () => {
+      reqParam.active = false;
+    };
   }, [debounced10]);
 
   return (

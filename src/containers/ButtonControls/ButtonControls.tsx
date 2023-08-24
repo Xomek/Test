@@ -21,7 +21,7 @@ const right2Control = models.getControlByName("right2");
 const left1Right1Control = models.getControlByName("left1-right1");
 
 right2Control?.createButton("right", "Очистить", right2Control.onClearHandler);
-right2Control?.createButton("right", "Заполнить",right2Control.helloWorldInValue);
+right2Control?.createButton("right", "Заполнить", right2Control.helloWorldInValue);
 
 left1Right1Control?.createButton("left", "Проверить", left1Right1Control.checkInNumberValue);
 left1Right1Control?.createButton("right", "alert", left1Right1Control.alertValue);
