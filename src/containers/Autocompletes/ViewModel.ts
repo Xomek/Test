@@ -40,8 +40,10 @@ class ViewModel<T extends FieldType> extends Control<T> {
       const patch = await getCountryByName(countryName);
 
       runInAction(() => {
-        this.countries = patch;
-        this.isLoading = false;
+        if (this.isLoading) {
+          this.countries = patch;
+          this.isLoading = false;
+        }
       });
     } catch (error) {
       runInAction(() => {

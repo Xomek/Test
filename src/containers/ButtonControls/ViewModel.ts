@@ -24,11 +24,13 @@ class ViewModel<T extends FieldType> extends Control<T> {
   };
 
   alertValue = () => {
-    alert(this?.field.value ?? "");
+    alert(this.field.value ?? "");
   };
 
   checkInNumberValue = () => {
-    !isNaN(+this?.field.value) && alert(this?.field.value);
+    !isNaN(+this.field.value) &&
+      this.field.value !== "" &&
+      alert(this.field.value);
   };
 
   createButton = (type: "left" | "right", text: string, cb: () => void) => {
