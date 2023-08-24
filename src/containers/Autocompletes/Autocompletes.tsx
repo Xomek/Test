@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { CountiresOption } from "../../components";
+import { useDebounce } from "../../hooks/useDebounce";
 import { Paper, AutocompleteControl } from "../../components/UI";
 import { FieldType, AUTOCOMPLETES_NAMES } from "./Autocompletes.types";
 import ViewModel from "./ViewModel";
+import ControlList from "../../ViewModels/ControlList";
 import styles from "./Autocompletes.module.css";
 
-const models = [
+const list = new ControlList([
   new ViewModel<FieldType>({
     value: "",
     name: AUTOCOMPLETES_NAMES.AUTOCOMPLETE3,
@@ -18,27 +20,30 @@ const models = [
     name: AUTOCOMPLETES_NAMES.AUTOCOMPLETE10,
     max: 10,
   }),
-];
+]);
 
 const Autocompletes: React.FC = observer(() => {
   const [
     { field: field3, getCountries: getCountries3 },
     { field: field10, getCountries: getCountries10 },
-  ] = models;
+  ] = list.controls;
+
+  const debounced3 = useDebounce(field3.value, 400);
+  const debounced10 = useDebounce(field10.value, 400);
 
   useEffect(() => {
     getCountries3(field3.value);
-  }, [field3.value]);
+  }, [debounced3]);
 
   useEffect(() => {
     getCountries10(field10.value);
-  }, [field10.value]);
+  }, [debounced10]);
 
   return (
     <Paper className={styles.paper}>
       <div className={styles.title}>Контрол-автокомплит</div>
 
-      {models.map(
+      {list.controls.map(
         ({
           field,
           countries,
