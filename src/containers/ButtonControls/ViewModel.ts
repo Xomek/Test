@@ -1,36 +1,37 @@
-import { action, makeObservable, observable } from "mobx";
+import { action, makeObservable, override } from "mobx";
 import Control from "../../ViewModels/Control";
+import { FieldType } from "./ButtonControls.types";
 import { ControlButtons } from "../../components/UI/ButtonControl";
 
-class ViewModel<
-  T extends { value: string; name: string },
-  K extends string
-> extends Control<T, K> {
-  @observable leftButtons: ControlButtons[] = [];
-  @observable rightButtons: ControlButtons[] = [];
+class ViewModel<T extends FieldType> extends Control<T> {
+  leftButtons: ControlButtons[] = [];
+  rightButtons: ControlButtons[] = [];
 
-  constructor(name: K) {
-    super(name);
-    makeObservable(this);
+  constructor(initial: T) {
+    super(initial);
+    makeObservable(this, {
+      field: override,
+      onChagneHandler: override,
+      onClearHandler: override,
+      helloWorldInValue: action,
+      alertValue: action,
+      checkInNumberValue: action,
+      createButton: action,
+    });
   }
-
-  @action helloWorldInValue() {
+  helloWorldInValue = () => {
     this.field.value = "Hello World";
-  }
+  };
 
-  @action alertValue() {
-    alert(this.field.value);
-  }
+  alertValue = () => {
+    alert(this?.field.value ?? "");
+  };
 
-  @action clearValue() {
-    this.field.value = "";
-  }
+  checkInNumberValue = () => {
+    !isNaN(+this?.field.value) && alert(this?.field.value);
+  };
 
-  @action checkInNumberValue() {
-    !isNaN(+this.field.value) && alert(this.field.value);
-  }
-
-  @action createButton(type: "left" | "right", text: string, cb: () => void) {
+  createButton = (type: "left" | "right", text: string, cb: () => void) => {
     switch (type) {
       case "left":
         this.leftButtons.push({ text, onClick: cb });
@@ -40,7 +41,7 @@ class ViewModel<
         this.rightButtons.push({ text, onClick: cb });
         break;
     }
-  }
+  };
 }
 
 export default ViewModel;

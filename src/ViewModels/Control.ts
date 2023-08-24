@@ -1,19 +1,24 @@
-import { observable, action, makeObservable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
+import { FieldType } from "../types";
 
-class Control<T extends { value: string; name: string }, K extends string> {
-  @observable field: T = { value: "", name: "" } as T;
+class Control<T extends FieldType> {
+  field: T;
 
-  constructor(name: K) {
-    makeObservable(this);
+  constructor(initial: T) {
+    this.field = initial;
 
-    this.field.name = name;
+    makeObservable(this, {
+      field: observable,
+      onChagneHandler: action,
+      onClearHandler: action,
+    });
   }
 
-  @action onChagneHandler = (value: string) => {
+  onChagneHandler = (value: string) => {
     this.field.value = value;
   };
 
-  @action onClearHandler = () => {
+  onClearHandler = () => {
     this.field.value = "";
   };
 }
